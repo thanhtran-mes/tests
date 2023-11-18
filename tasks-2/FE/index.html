@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $.ajax({
+        url: "https://localhost:7031/Home",
+        context: document.body,
+        crossDomain: true,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+        },
+        success: function (data) {
+          $("#scheme").text(data.scheme);
+          $("#brand").text(data.brand);
+          $("#type").text(data.type);
+          $("#length").text(data.number.length);
+          $("#luhn").text(data.number.luhn ? "Yes" : "No");
+          $("#prepaid").text(data.number.prepaid ? "Yes" : "No");
+          $("#country").text(data.country.alpha2 + " " + data.country.name);
+          $("#latitude").text(data.country.latitude);
+          $("#longitude").text(data.country.longitude);
+          $("#bankName").text(data.bank.name + ", " + data.bank.city);
+          $("#url").html(
+            "<a href=" + data.bank.url + ">" + data.bank.url + "</a>"
+          );
+          $("#phone").text(data.bank.phone);
+        },
+      });
+    </script>
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        background-color: #2196f3;
+        padding: 10px;
+      }
+      .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        font-size: 16px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item">
+        <h2>Scheme / network</h2>
+        <p id="scheme"></p>
+      </div>
+      <div class="grid-item">
+        <h2>Brand</h2>
+        <p id="brand"></p>
+      </div>
+      <div class="grid-item">
+        <h2>Card number</h2>
+        <h3>Length <p id="length"></p></h3>
+        <h3>LUHN <p id="luhn"></p></h3>
+      </div>
+      <div class="grid-item">
+        <h2>Type</h2>
+        <p id="type"></p>
+      </div>
+      <div class="grid-item">
+        <h2>Prepaid</h2>
+        <p id="prepaid"></p>
+      </div>
+      <div class="grid-item">
+        <h2>Country</h2>
+        <p id="country" class="name"></p>
+        <p class="geo">
+          (latitude: <span id="latitude" class="latitude"></span>, longitude:
+          <span id="longitude" class="longitude"></span>)
+        </p>
+      </div>
+      <div class="grid-item">
+        <h2>Bank</h2>
+        <p id="bankName" class="name"></p>
+        <p id="url" class="url"><a href="https://jyskebank.dk"></a></p>
+        <p id="phone" class="phone"></p>
+      </div>
+    </div>
+  </body>
+</html>
